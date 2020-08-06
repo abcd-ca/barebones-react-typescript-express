@@ -1,9 +1,14 @@
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 
+const isProduction = typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'production';
+const devtool = isProduction ? false : 'inline-source-map';
+const mode = isProduction ? 'production' : 'development';
+
 const serverConfig = {
-    mode: process.env.NODE_ENV || 'development',
     entry: './src/server/server.ts',
+    mode,
+    devtool,
     module: {
         rules: [
             {
@@ -31,9 +36,10 @@ const serverConfig = {
 };
 
 const clientConfig = {
-    mode: process.env.NODE_ENV || 'development',
     entry: './src/client/index.tsx',
-    devtool: 'inline-source-map',
+    mode,
+    devtool,
+
     module: {
       rules: [
         {
@@ -41,7 +47,10 @@ const clientConfig = {
             loader: 'ts-loader',
             exclude: /node_modules/,
             options: {
-                configFile: 'tsconfig.client.json'
+                configFile: 'tsconfig.client.json',
+                compilerOptions: {
+                    "sourceMap": !isProduction,
+                }
             }
         },
         {
@@ -58,8 +67,8 @@ const clientConfig = {
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss']
     },
     output: {
-        filename: 'app.js',
-        path: path.resolve(__dirname, 'public/js')
+        filename: 'client.js',
+        path: path.resolve(__dirname, 'dist', 'public')
     }
 };
 

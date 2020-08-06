@@ -4,10 +4,12 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "watch:build": "npx webpack -w",
+    "___watch:build": "npx webpack-dev-server ",
+    "watch:build": "npx webpack -w --progress",
+    "build": "npx webpack",
     "watch:server": "nodemon dist/server.js",
     "dev": "npm-run-all --parallel watch:*",
-    "start": "node dist/server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4",
-    "npm-run-all": "^4.1.3"
+    "npm-run-all": "^4.1.3",
+    "webpack-dev-server": "^3.11.0"
   }
 }
