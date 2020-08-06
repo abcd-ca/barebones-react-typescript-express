@@ -4,12 +4,12 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "___watch:build": "npx webpack-dev-server ",
-    "watch:build": "npx webpack -w --progress",
-    "build": "npx webpack",
+    "___watch:build": "webpack-dev-server ",
+    "watch:build": "webpack -w --progress",
+    "build": "webpack",
     "watch:server": "nodemon dist/server.js",
     "dev": "npm-run-all --parallel watch:*",
-    "start": "node server.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
