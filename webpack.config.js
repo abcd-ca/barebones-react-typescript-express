@@ -1,75 +1,60 @@
 const path = require('path');
-var nodeExternals = require('webpack-node-externals');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const isProduction = typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'production';
+const outputDirectory = 'dist';
+const isProduction =
+  typeof process.env.NODE_ENV !== 'undefined' &&
+  process.env.NODE_ENV === 'production';
 const devtool = isProduction ? false : 'inline-source-map';
 const mode = isProduction ? 'production' : 'development';
 
-const serverConfig = {
-    entry: './src/server/server.ts',
-    mode,
-    devtool,
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-                options: {
-                    configFile: 'tsconfig.server.json'
-                }
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js']
-    },
-    output: {
-        filename: 'server.js',
-        path: path.resolve(__dirname, 'dist')
-    },
-    target: 'node',
-    node: {
-        __dirname: false
-    },
-    externals: [nodeExternals()]
-};
-
-const clientConfig = {
-    entry: './src/client/index.tsx',
-    mode,
-    devtool,
-
-    module: {
-      rules: [
-        {
-            test: /\.tsx?$/,
-            loader: 'ts-loader',
-            exclude: /node_modules/,
-            options: {
-                configFile: 'tsconfig.client.json',
-                compilerOptions: {
-                    "sourceMap": !isProduction,
-                }
-            }
+module.exports = {
+  entry: './src/client/index.tsx',
+  mode,
+  devtool,
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: 'src/client/tsconfig.json',
+          compilerOptions: {
+            sourceMap: !isProduction,
+          },
         },
-        {
-            test: /\.scss$/,
-            use: [
-                'style-loader',
-                'css-loader',
-                'sass-loader',
-            ]
-        }
-      ]
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
+  },
+  output: {
+    filename: 'client.js',
+    path: path.resolve(__dirname, outputDirectory),
+  },
+  devServer: {
+    port: 3000,
+    open: true,
+    proxy: {
+      '/api': 'http://localhost:8080',
     },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.css', '.scss']
-    },
-    output: {
-        filename: 'client.js',
-        path: path.resolve(__dirname, 'dist', 'public')
-    }
+  },
+  plugins: [
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: [outputDirectory],
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
+  watchOptions: {
+    ignored: ['dist/**', 'node_modules/**'],
+  }
 };
-
-module.exports = [serverConfig, clientConfig];

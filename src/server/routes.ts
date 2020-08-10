@@ -1,9 +1,9 @@
-import * as express from 'express';
+import express from 'express';
 
 const router = express.Router();
 
 router.get('/api/hello', (req, res, next) => {
-    res.json('World');
+  res.json('world');
 });
 
 export default router;
