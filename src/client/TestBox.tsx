@@ -18,7 +18,7 @@ export const TestBox: React.FC<Props> = ({text}) => {
       style={{width: `${width}px`, height: "200px", backgroundColor: "#fc3", padding: "1em"}}
       onClick={increaseWidth}
     >
-      {text} (width: {width})
+      {text}. (width: {width})
     </div>
   )
 };

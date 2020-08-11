@@ -1,6 +1,5 @@
 node_modules/
-dist/public/client.js
-dist/server.js
 .idea
-/.DS_Store
+.DS_Store
 /dist/client.js
+/dist/server.js

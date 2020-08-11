@@ -23,7 +23,7 @@ class App extends React.Component<IAppProps, IAppState> {
     return (
       <main className='container my-5'>
         <h1 className='text-primary text-center'>Well hello, {this.state.name}!</h1>
-        <TestBox text={'it works'} />
+        <TestBox text={'Click to grow'} />
       </main>
     );
   }
