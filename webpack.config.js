@@ -1,7 +1,5 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-const outputDirectory = 'dist';
+const outputDirectory = 'public';
 const isProduction =
   typeof process.env.NODE_ENV !== 'undefined' &&
   process.env.NODE_ENV === 'production';
@@ -46,12 +44,8 @@ module.exports = {
       target: 'http://localhost:8080',
     }]
   },
-  plugins: [
-    new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: [outputDirectory],
-    })
-  ],
+  plugins: [],
   watchOptions: {
-    ignored: ['dist/**', 'node_modules/**'],
+    ignored: ['public/**', 'node_modules/**'],
   }
 };

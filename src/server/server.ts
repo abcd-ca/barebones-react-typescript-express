@@ -4,7 +4,7 @@ import apiRouter from './routes';
 
 const app = express();
 
-app.use(express.static(path.join('dist')));
+app.use(express.static(path.join('public')));
 app.use(apiRouter);
 
 app.get('/*', function (req, res) {

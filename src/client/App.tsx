@@ -22,6 +22,7 @@ class App extends React.Component<IAppProps, IAppState> {
   render() {
     return (
       <main className='container my-5'>
+        <img src="img/logo.png" width="100" />
         <h1 className='text-primary text-center'>Well hello, {this.state.name}!</h1>
         <TestBox text={'Click to grow'} />
       </main>
